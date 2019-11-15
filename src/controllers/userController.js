@@ -15,7 +15,9 @@ export const getLogin = (req, res) =>
 // join 후 login : postJoin에서 이 값을 넘겨 받는다
 export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
-  successRedirect: routes.home
+  successRedirect: routes.home,
+  successFlash: "Welcome",
+  failureFlash: "Can't log in. Check email and/or password"
 });
 
 // github login function : passport.js에 명시한 GithubStrategy을 실행한다
@@ -56,7 +58,10 @@ export const postGithubLogIn = (req, res) => {
   res.redirect("/");
 };
 
-export const facebookLogin = passport.authenticate("facebook");
+export const facebookLogin = passport.authenticate("facebook", {
+  successFlash: "Welcome",
+  failureFlash: "can't log in at this time"
+});
 
 export const facebookLoginCallback = async (
   accessToken,
@@ -104,6 +109,7 @@ export const postJoin = async (req, res, next) => {
     body: { name, email, password, password2 }
   } = req;
   if (password !== password2) {
+    req.flash("error", "passwords dont match");
     // 입력한 패스워드와 확인할 패스워드가 일치하지 않을 경우 http 에러 코드 400을 서버로 전송한다
     res.status(400);
     res.render("join", { pageTitle: "Join" });
