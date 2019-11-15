@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU", crossorigin="anonymous")
+        title #{pageTitle} | #{siteName}
+        link(rel="stylesheet", href="/static/styles.css")
+    body
+        include ../partials/header
+        main
+            //- block을 사용해 레이아웃에 변경될 부분을 지정할 수 있다
+            block content
+        include ../partials/footer
+        script(src="/static/main.js")
